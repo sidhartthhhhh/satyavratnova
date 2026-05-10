@@ -23,6 +23,9 @@ class Post(models.Model):
     class Meta:
         db_table = "posts"
         ordering = ["-timestamp"]
+        indexes = [
+            models.Index(fields=["-timestamp"], name="posts_time_idx"),
+        ]
 
     def __str__(self):
         return self.caption[:40]
