@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "Gen Z Posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "user_id",
+      "value": "1"
+    },
+    {
+      "key": "post_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/health/"
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"username\":\"sidharth\",\"email\":\"sidhartthhhhh712@gmail.com\"}"
+        },
+        "url": "{{base_url}}/api/users/"
+      }
+    },
+    {
+      "name": "List Users",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/users/"
+      }
+    },
+    {
+      "name": "Create Presigned Upload URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"file_name\":\"demo.mp4\",\"file_size\":1048576}"
+        },
+        "url": "{{base_url}}/api/media/presigned-url/"
+      }
+    },
+    {
+      "name": "Reject Bad Media Extension",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"file_name\":\"demo.mov\",\"file_size\":1048576}"
+        },
+        "url": "{{base_url}}/api/media/presigned-url/"
+      }
+    },
+    {
+      "name": "Create Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"user_id\":{{user_id}},\"caption\":\"first post #fyp #viral\",\"media_url\":\"http://localhost:4566/genz-media/uploads/demo.mp4\",\"bitrate_status\":\"ready\"}"
+        },
+        "url": "{{base_url}}/api/posts/"
+      }
+    },
+    {
+      "name": "Paginated Feed",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/posts/?limit=10&offset=0"
+      }
+    },
+    {
+      "name": "Get Post",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/posts/{{post_id}}/"
+      }
+    },
+    {
+      "name": "Trending",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/posts/trending/?hashtags=%23fyp,%23viral&limit=10"
+      }
+    },
+    {
+      "name": "Top 10 Trending Cached",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/posts/trending/top10/"
+      }
+    },
+    {
+      "name": "Search Captions",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/posts/search/?q=first&limit=10&offset=0"
+      }
+    },
+    {
+      "name": "Delete Post",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/posts/{{post_id}}/"
+      }
+    }
+  ]
+}
