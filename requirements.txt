@@ -1,2 +1,4 @@
 Django==4.2.21
 psycopg[binary]==3.2.9
+boto3==1.38.13
+redis==5.2.1
