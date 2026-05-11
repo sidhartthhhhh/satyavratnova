@@ -73,14 +73,14 @@ def users(request):
         all_users = User.objects.all().order_by("-created_at")
         return JsonResponse({"users": [user_to_json(x) for x in all_users]})
 
-    stuff = get_body(request)
-    if not stuff.get("username") or not stuff.get("email"):
+    data = get_body(request)
+    if not data.get("username") or not data.get("email"):
         return JsonResponse({"error": "username and email are needed"}, status=400)
 
     try:
         new_user = User.objects.create(
-            username=stuff.get("username"),
-            email=stuff.get("email"),
+            username=data.get("username"),
+            email=data.get("email"),
         )
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
@@ -94,9 +94,9 @@ def posts(request):
     if request.method == "GET":
         limit = get_int_param(request, "limit", 20, 100)
         offset = get_int_param(request, "offset", 0, 100000)
-        all_the_posts = Post.objects.select_related("user").all()
-        total = all_the_posts.count()
-        page = all_the_posts[offset : offset + limit]
+        query = Post.objects.select_related("user").all()
+        total = query.count()
+        page = query[offset : offset + limit]
         next_offset = offset + limit
         if next_offset >= total:
             next_offset = None
@@ -111,10 +111,10 @@ def posts(request):
         )
 
     data = get_body(request)
-    needed = ["user_id", "caption", "media_url"]
-    for thing in needed:
-        if not data.get(thing):
-            return JsonResponse({"error": thing + " is missing"}, status=400)
+    required_fields = ["user_id", "caption", "media_url"]
+    for field in required_fields:
+        if not data.get(field):
+            return JsonResponse({"error": field + " is missing"}, status=400)
 
     try:
         user = User.objects.get(id=data.get("user_id"))
@@ -195,8 +195,8 @@ def make_upload_url(request):
 
 @require_http_methods(["GET"])
 def trending(request):
-    hash_tags = request.GET.get("hashtags", "#viral,#fyp,#trending,#slay")
-    tags = [x.strip() for x in hash_tags.split(",") if x.strip()]
+    hashtag_text = request.GET.get("hashtags", "#viral,#fyp,#trending,#slay")
+    tags = [x.strip() for x in hashtag_text.split(",") if x.strip()]
 
     my_filter = Q()
     for tag in tags:
@@ -212,12 +212,12 @@ def trending(request):
     if limit < 1:
         limit = 1
 
-    cool_posts = Post.objects.filter(my_filter).order_by("-timestamp")[:limit]
+    trending_posts = Post.objects.filter(my_filter).order_by("-timestamp")[:limit]
     return JsonResponse(
         {
-            "algorithm": "recent posts that have the hashtags, very advanced obviously",
+            "algorithm": "recent posts matching the requested hashtags",
             "hashtags": tags,
-            "posts": [post_to_json(p) for p in cool_posts],
+            "posts": [post_to_json(p) for p in trending_posts],
         }
     )
 

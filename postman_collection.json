@@ -37,7 +37,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"username\":\"sidharth\",\"email\":\"sidhartthhhhh712@gmail.com\"}"
+          "raw": "{\"username\":\"demo_user\",\"email\":\"demo@example.com\"}"
         },
         "url": "{{base_url}}/api/users/"
       }

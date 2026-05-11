@@ -2,7 +2,7 @@
 
 Small Django REST-ish service for users, posts, video upload URLs, trending feeds, Redis caching, and caption search.
 
-The code is intentionally simple and a little junior-dev-ish, but the stack is real: Django, PostgreSQL, Redis, and LocalStack S3.
+The project demonstrates a practical backend architecture using Django, PostgreSQL, Redis, and LocalStack S3.
 
 ## Run Everything With Docker
 
