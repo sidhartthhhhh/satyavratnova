@@ -63,7 +63,13 @@ def get_trending_posts(limit=20):
 
 
 def health(request):
-    return JsonResponse({"ok": True, "time": timezone.now().isoformat()})
+    return JsonResponse(
+        {
+            "ok": True,
+            "api_version": "1.0",
+            "time": timezone.now().isoformat(),
+        }
+    )
 
 
 @csrf_exempt
