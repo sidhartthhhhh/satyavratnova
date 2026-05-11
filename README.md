@@ -147,9 +147,3 @@ postman_collection.json
 ```
 
 Set `base_url` to `http://127.0.0.1:8000`.
-
-## Submission Files
-
-- Source code: this repo, ready to push to GitHub
-- Postman collection: `postman_collection.json`
-- Dockerized setup: `docker-compose.yml`
